@@ -1,10 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+// import PropTypes from "prop-types";
 //import { Test } from './Button.styles';
 
-const Button = (props) => (
+// window.scrollTo({
+//   top: document.documentElement.scrollHeight,
+//   behavior: "smooth",
+// });
+
+const Button = ({ onClick }) => (
   <div className="ButtonWrapper">
-    Test content
+    <button type="button" onClick={onClick}>
+      Load more
+    </button>
   </div>
 );
 
