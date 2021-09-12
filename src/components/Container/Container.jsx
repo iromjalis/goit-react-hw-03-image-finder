@@ -1,10 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import css from "./Container.module.css";
-import { Fragment } from "react";
 
 const Container = ({ children }) => (
-  <Fragment className={css.Container}>{children}</Fragment>
+  <div className={css.Container}>{children}</div>
 );
 
 Container.propTypes = {
