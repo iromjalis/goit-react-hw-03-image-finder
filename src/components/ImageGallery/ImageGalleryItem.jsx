@@ -1,25 +1,18 @@
-import React, { Component } from "react";
+import React from 'react';
+// import PropTypes from 'prop-types';
 
-class ImageGalleryItem extends Component {
-  state = {};
-  handleClick = (e) => {
-    console.log(e.currentTarget);
-    console.log(e.target.large);
-  };
+const ImageGalleryItem = () => (
+  <li className="ImageGalleryItem">
+    <img src="" alt="" className="ImageGalleryItem-image" />
+  </li>
+);
 
-  render() {
-    const { webformatURL, user, largeImageURL, id } = this.props.image;
-    return (
-      <li className="ImageGalleryItem" key={id} onClick={this.handleClick}>
-        <img
-          src={webformatURL}
-          alt={user}
-          large={largeImageURL}
-          className="ImageGalleryItem-image"
-        />
-      </li>
-    );
-  }
-}
+ImageGalleryItem.propTypes = {
+  // bla: PropTypes.string,
+};
+
+ImageGalleryItem.defaultProps = {
+  // bla: 'test',
+};
 
 export default ImageGalleryItem;

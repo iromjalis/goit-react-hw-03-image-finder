@@ -1,19 +1,15 @@
-import React from "react";
-// import PropTypes from "prop-types";
-import shortid from "shortid";
-import ImageGalleryItem from "./ImageGalleryItem";
-//import { Test } from './ImageGallery.styles';
+import React from 'react';
+import ImageGalleryItem from './ImageGalleryItem';
 
-const ImageGallery = ({ images }) => {
-  return (
-    <ul className="ImageGallery" id="#imagesList">
-      {images &&
-        images.map((image) => {
-          return <ImageGalleryItem key={shortid.generate()} image={image} />;
-        })}
-    </ul>
-  );
-};
+const ImageGallery = () => (
+  <ul className="ImageGallery">
+    ImageGallery
+    <ImageGalleryItem />
+    {/* <!-- Набор <li> с изображениями --> */}
+  </ul>
+);
+
+export default ImageGallery;
 
 ImageGallery.propTypes = {
   // bla: PropTypes.string,
@@ -22,5 +18,3 @@ ImageGallery.propTypes = {
 ImageGallery.defaultProps = {
   // bla: 'test',
 };
-
-export default ImageGallery;
