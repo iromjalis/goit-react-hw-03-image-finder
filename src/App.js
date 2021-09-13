@@ -19,6 +19,7 @@ class App extends Component {
     currentPage: 1,
     searchQuery: "",
     isLoading: false,
+    showModal: false,
     error: null,
   };
 
@@ -26,6 +27,10 @@ class App extends Component {
     if (prevState.searchQuery !== this.state.searchQuery) {
       this.fetchImages();
     }
+  }
+
+  componentDidCatch(error) {
+    this.setState({ error });
   }
 
   onChangeQuery = (query) => {
@@ -47,13 +52,69 @@ class App extends Component {
       )
       .then(({ data }) => {
         this.setState((prevState) => ({
-          images: [...data.hits],
+          images: [...prevState.images, ...this.state.images],
           currentPage: prevState.currentPage + 1,
+          error: "",
         }));
       })
       .catch((error) => console.log(error))
       .finally(() => this.setState({ isLoading: false }));
   };
+
+  //прокрутка вниз
+  handleOnButtonClick = () => {
+    this.fetchImages()
+      .then(() =>
+        // eslint-disable-next-line
+        window.scrollTo({
+          // eslint-disable-next-line
+          top: document.documentElement.scrollHeight,
+          behavior: "smooth",
+        })
+      )
+      .catch((error) => this.setState({ error }))
+      .finally(() => this.setState({ loader: false }));
+  };
+
+  onLoadMore = () => {
+    const { searchQuery, currentPage } = this.state;
+
+    this.setState({ isLoading: true });
+
+    this.fetchImages(searchQuery, currentPage + 1)
+      .then((response) =>
+        this.setState((prevState) => ({
+          images: [...prevState.images, ...response.data.hits],
+          currentPage: prevState.currentPage + 1,
+        }))
+      )
+      .catch((error) => this.setState({ error }))
+      .finally(() => {
+        this.setState({ isLoading: false });
+        window.scrollTo({
+          top: document.querySelector("#imagesList").scrollHeight,
+          behavior: "smooth",
+        });
+      });
+  };
+  handleImageClick = ({ target }) => {
+    if (target.nodeName !== "IMG") {
+      return;
+    }
+    const { url } = target.dataset;
+    const tag = target.alt;
+    this.setState({
+      url,
+      tag,
+      isLoading: true,
+    });
+    this.toggleModal();
+  };
+
+  toggleModal = () =>
+    this.setState((prevState) => ({ showModal: !prevState.showModal }));
+
+  hideLoaderInModal = () => this.setState({ isLoading: false });
 
   componentDidMount() {
     const { searchQuery } = this.state;
@@ -67,11 +128,18 @@ class App extends Component {
       })
       .catch((error) => console.log(error));
   }
+
   render() {
-    const { images, filter, isLoading, error } = this.state;
+    const { images, filter, isLoading, error, showModal } = this.state;
     return (
       <div className="App">
         <Container>
+          {showModal && (
+            <Modal onClose={this.toggleModal} onClick={this.handleImageClick}>
+              {isLoading && <ImageLoader />}
+              <img src={url} alt={tag} onLoad={this.hideLoaderInModal} />
+            </Modal>
+          )}
           {error && <h1>404 - Page not found!!!</h1>}
           <Searchbar onSubmit={this.onChangeQuery} value={filter} />
           {isLoading && (

@@ -1,26 +1,14 @@
 import React from "react";
-// import PropTypes from "prop-types";
-//import { Test } from './Button.styles';
-
-// window.scrollTo({
-//   top: document.documentElement.scrollHeight,
-//   behavior: "smooth",
-// });
+import PropTypes from "prop-types";
 
 const Button = ({ onClick }) => (
-  <div className="ButtonWrapper">
-    <button type="button" onClick={onClick}>
-      Load more
-    </button>
-  </div>
+  <button type="button" onClick={onClick}>
+    Load more...
+  </button>
 );
 
 Button.propTypes = {
-  // bla: PropTypes.string,
-};
-
-Button.defaultProps = {
-  // bla: 'test',
+  onClick: PropTypes.func.isRequired,
 };
 
 export default Button;

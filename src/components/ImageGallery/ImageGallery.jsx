@@ -6,14 +6,12 @@ import ImageGalleryItem from "./ImageGalleryItem";
 
 const ImageGallery = ({ images }) => {
   return (
-    <div className="ImageGalleryWrapper">
-      <ul className="ImageGallery">
-        {images &&
-          images.map((image) => {
-            return <ImageGalleryItem key={shortid.generate()} image={image} />;
-          })}
-      </ul>
-    </div>
+    <ul className="ImageGallery" id="#imagesList">
+      {images &&
+        images.map((image) => {
+          return <ImageGalleryItem key={shortid.generate()} image={image} />;
+        })}
+    </ul>
   );
 };
 
