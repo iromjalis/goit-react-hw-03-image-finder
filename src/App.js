@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unused-state */
 import './App.css';
 import React, { Component } from 'react';
 // import axios from 'axios';
@@ -5,8 +6,9 @@ import React, { Component } from 'react';
 
 import Container from './components/Container/Container';
 import Searchbar from './components/Searchbar/Searchbar';
-import ImageGallery from './components/ImageGallery/ImageGallery';
-// import Button from './components/Button/Button';
+// import ImageGallery from './components/ImageGallery/ImageGallery';
+import Button from './components/Button/Button';
+import Modal from './components/Modal/Modal';
 
 // https://pixabay.com/api/?q=что_искать&page=номер_страницы&key=твой_ключ&image_type=photo&orientation=horizontal&per_page=12
 
@@ -14,7 +16,13 @@ import ImageGallery from './components/ImageGallery/ImageGallery';
 //! https://pixabay.com/api/?key=21072245-3acfda09a1d5bc65070e6b336&q=yellow+flowers&image_type=photo
 
 class App extends Component {
-  state = {};
+  state = {
+    images: [],
+    // filter: '',
+    // isLoading: false,
+    // error: null,
+    showModal: false,
+  };
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.searchQuery !== this.state.searchQuery) {
@@ -64,14 +72,21 @@ class App extends Component {
   //     .catch(error => console.log(error));
   // };
 
+  toggleModal = () =>
+    this.setState(({ showModal }) => ({
+      showModal: !showModal,
+    }));
+
   render() {
-    // const { images, filter, isLoading, error } = this.state;
+    const { images, showModal } = this.state;
     return (
       <div className="App">
         <Container>
           <Searchbar onSubmit={this.onChangeQuery} />
-          <ImageGallery />
+          {/* <ImageGallery /> */}
+          {images.length > 0 && <Button />}
         </Container>
+        {showModal && <Modal onClose={this.toggleModal} />}
       </div>
     );
   }
