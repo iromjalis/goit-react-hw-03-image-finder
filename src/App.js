@@ -1,14 +1,14 @@
 /* eslint-disable react/no-unused-state */
-import './App.css';
-import React, { Component } from 'react';
+import "./App.css";
+import React, { Component } from "react";
 // import axios from 'axios';
 // import Loader from 'react-loader-spinner';
 
-import Container from './components/Container/Container';
-import Searchbar from './components/Searchbar/Searchbar';
+import Container from "./components/Container/Container";
+import Searchbar from "./components/Searchbar/Searchbar";
 // import ImageGallery from './components/ImageGallery/ImageGallery';
-import Button from './components/Button/Button';
-import Modal from './components/Modal/Modal';
+import Button from "./components/Button/Button";
+import Modal from "./components/Modal/Modal";
 
 // https://pixabay.com/api/?q=что_искать&page=номер_страницы&key=твой_ключ&image_type=photo&orientation=horizontal&per_page=12
 
@@ -86,6 +86,7 @@ class App extends Component {
           {/* <ImageGallery /> */}
           {images.length > 0 && <Button />}
         </Container>
+        <button onClick={this.toggleModal}> show modal</button>
         {showModal && <Modal onClose={this.toggleModal} />}
       </div>
     );
