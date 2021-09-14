@@ -3,16 +3,16 @@ import React, { PureComponent } from "react";
 // import { Test } from './Button.styles';
 
 class Button extends PureComponent {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      hasError: false,
-    };
-  }
+  state = {
+    hasError: false,
+  };
 
   render() {
-    return <button className="ButtonWrapper">Load more...</button>;
+    return (
+      <button className="ButtonWrapper" onClick={this.props.onClick}>
+        Load more...
+      </button>
+    );
   }
 }
 
