@@ -15,7 +15,9 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-icons": "^4.2.0",
+    "react-loader-spinner": "^4.0.0",
     "react-scripts": "4.0.3",
+    "shortid": "^2.2.16",
     "utils": "^0.3.1",
     "web-vitals": "^1.1.2"
   },

@@ -2,13 +2,15 @@
 import "./App.css";
 import React, { Component } from "react";
 import axios from "axios";
-// import Loader from 'react-loader-spinner';
+
+import imagesApi from "./services/images-api";
 
 import Container from "./components/Container/Container";
 import Searchbar from "./components/Searchbar/Searchbar";
 import ImageGallery from "./components/ImageGallery/ImageGallery";
 import Button from "./components/Button/Button";
 import Modal from "./components/Modal/Modal";
+import Loader from "components/Loader/Loader";
 
 // https://pixabay.com/api/?q=что_искать&page=номер_страницы&key=твой_ключ&image_type=photo&orientation=horizontal&per_page=12
 
@@ -18,12 +20,13 @@ import Modal from "./components/Modal/Modal";
 class App extends Component {
   state = {
     images: [],
-    searchQuery: "cat",
+    searchQuery: "",
     largeImageURL: "",
     filter: "",
     isLoading: false,
     error: null,
     showModal: false,
+    currentPage: 1,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -37,42 +40,35 @@ class App extends Component {
   }
 
   onChangeQuery = (query) => {
-    this.setState({
-      searchQuery: query,
-    });
+    this.setState({ searchQuery: query, currentPage: 1, images: [] });
   };
 
   fetchImages = () => {
     const { currentPage, searchQuery } = this.state;
 
     this.setState({ isLoading: true });
-    axios
-      .get(
-        `https://pixabay.com/api/?key=21072245-3acfda09a1d5bc65070e6b336&q=${searchQuery}&image_type=photo&page=${currentPage}`
-      )
-      .then((response) => {
+
+    const options = {
+      searchQuery,
+      currentPage,
+    };
+    imagesApi
+      .fetchImages(options)
+      .then((data) => {
         this.setState((prevState) => ({
-          images: [...prevState.images, ...this.state.images],
+          images: [...prevState.images, ...data],
           currentPage: prevState.currentPage + 1,
           error: "",
         }));
       })
       .catch((error) => console.log(error))
-      .finally(() => this.setState({ isLoading: false }));
-  };
-
-  componentDidMount = () => {
-    const { searchQuery } = this.state;
-
-    axios
-      .get(
-        `https://pixabay.com/api/?key=21072245-3acfda09a1d5bc65070e6b336&q=${searchQuery}&image_type=photo`
-      )
-      .then(({ data }) => {
-        this.setState({ images: data.hits });
-      })
-      .catch((error) => console.log(error));
-  };
+      .finally(() => {
+        this.setState({ isLoading: false });
+        window.scrollTo({
+          top: document.querySelector("#imagesList").scrollHeight,
+          behavior: "smooth",
+        });
+      });  };
 
   toggleModal = () =>
     this.setState(({ showModal }) => ({
@@ -85,7 +81,7 @@ class App extends Component {
   };
 
   render() {
-    const { images, showModal, largeImageURL } = this.state;
+    const { images, showModal, largeImageURL, isLoading } = this.state;
     return (
       <div className="App">
         <Container>
@@ -102,9 +98,12 @@ class App extends Component {
               handleLargeURLImage={this.handleLargeURLImage}
             />
           )}
-          {images.length > 0 && <Button />}
+          {isLoading ? (
+            <Loader />
+          ) : (
+            images.length > 0 && <Button onClick={this.fetchImages} />
+          )}
         </Container>
-        {/* <button onClick={this.toggleModal}> show modal</button> */}
       </div>
     );
   }
