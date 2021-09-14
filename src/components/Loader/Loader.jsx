@@ -1,6 +1,6 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent } from "react";
 // import PropTypes from 'prop-types';
-// import { Test } from './Loader.styles';
+import ThreeDots from "react-loader-spinner";
 
 class Loader extends PureComponent {
   constructor(props) {
@@ -15,7 +15,11 @@ class Loader extends PureComponent {
     if (this.state.hasError) {
       return <h1>Something went wrong.</h1>;
     }
-    return <div className="LoaderWrapper">Loader</div>;
+    return (
+      <div className="LoaderWrapper">
+        <ThreeDots type="ThreeDots" color="#00BFFF" height={80} width={80} />
+      </div>
+    );
   }
 }
 
