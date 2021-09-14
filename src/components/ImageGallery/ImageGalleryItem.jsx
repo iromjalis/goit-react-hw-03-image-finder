@@ -3,14 +3,13 @@ import React, { PureComponent } from "react";
 
 class ImageGalleryItem extends PureComponent {
   handleClick = (e) => {
-    this.props.toggleModal();
     if (e.target.nodeName === "IMG") {
       this.setState({ largeImageURL: e.target.dataset.large });
       this.props.handleLargeURLImage(e.target.dataset.large);
     }
   };
   render() {
-    const { id, webformatURL, largeImageURL, tags, toggleModal } = this.props;
+    const { id, webformatURL, largeImageURL, tags } = this.props;
 
     return (
       <li className="ImageGalleryItem" key={id} onClick={this.handleClick}>

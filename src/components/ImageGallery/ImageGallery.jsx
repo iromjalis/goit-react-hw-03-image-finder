@@ -11,7 +11,7 @@ class ImageGallery extends Component {
     this.props.handleLargeURLImage(data);
   };
   render() {
-    const { images, toggleModal } = this.props;
+    const { images } = this.props;
     return (
       <ul className="ImageGallery">
         {images.map(({ id, webformatURL, largeImageURL, tags }) => (
@@ -22,7 +22,6 @@ class ImageGallery extends Component {
             largeImageURL={largeImageURL}
             tag={tags}
             handleLargeURLImage={this.handleLargeURLImage}
-            toggleModal={toggleModal}
           />
         ))}
       </ul>

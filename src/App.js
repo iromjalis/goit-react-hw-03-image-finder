@@ -18,11 +18,11 @@ import Modal from "./components/Modal/Modal";
 class App extends Component {
   state = {
     images: [],
-    searchQuery: "",
+    searchQuery: "cat",
     largeImageURL: "",
-    // filter: '',
-    // isLoading: false,
-    // error: null,
+    filter: "",
+    isLoading: false,
+    error: null,
     showModal: false,
   };
 
@@ -36,11 +36,11 @@ class App extends Component {
     this.setState({ error });
   }
 
-  // onChangeQuery = query => {
-  //   this.setState({
-  //     searchQuery: query,
-  //   });
-  // };
+  onChangeQuery = (query) => {
+    this.setState({
+      searchQuery: query,
+    });
+  };
 
   fetchImages = () => {
     const { currentPage, searchQuery } = this.state;
@@ -92,12 +92,14 @@ class App extends Component {
           {showModal && (
             <Modal onClose={this.toggleModal} largeImageURL={largeImageURL} />
           )}
-          <Searchbar onSubmit={this.onChangeQuery} />
+          <Searchbar
+            onSubmit={this.onChangeQuery}
+            searchQuery={this.searchQuery}
+          />
           {images.length > 0 && (
             <ImageGallery
               images={images}
               handleLargeURLImage={this.handleLargeURLImage}
-              toggleModal={this.toggleModal}
             />
           )}
           {images.length > 0 && <Button />}
