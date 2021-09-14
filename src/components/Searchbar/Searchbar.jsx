@@ -5,14 +5,16 @@ import React, { PureComponent } from "react";
 class Searchbar extends PureComponent {
   state = { query: "" };
 
-  onChange = (e) => {
-    console.log(e.target.value);
-    this.setState({ query: e.target.value });
-    this.props.onSubmit(this.state.query);
+  handleChange = (e) => {
+    this.setState({ query: e.currentTarget.value });
   };
 
-  handleSubmit = () => {
+  handleSubmit = (e) => {
+    e.preventDefault();
+
     this.props.onSubmit(this.state.query);
+
+    this.setState({ query: "" });
   };
   render() {
     const { query } = this.state;
@@ -25,12 +27,12 @@ class Searchbar extends PureComponent {
           </button>
 
           <input
+            onChange={this.handleChange}
             className="SearchForm-input"
             value={query}
             type="text"
             autoComplete="off"
             placeholder="Search images and photos"
-            onChange={this.onChange}
           />
         </form>
       </header>
