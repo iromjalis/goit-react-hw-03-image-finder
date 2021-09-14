@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unused-state */
 import "./App.css";
 import React, { Component } from "react";
-// import axios from 'axios';
+import axios from "axios";
 // import Loader from 'react-loader-spinner';
 
 import Container from "./components/Container/Container";
@@ -59,18 +59,18 @@ class App extends Component {
   //     .finally(() => this.setState({ isLoading: false }));
   // };
 
-  // componentDidMount = () => {
-  //   const { searchQuery } = this.state;
+  componentDidMount = () => {
+    const { searchQuery } = this.state;
 
-  //   axios
-  //     .get(
-  //       `https://pixabay.com/api/?key=21072245-3acfda09a1d5bc65070e6b336&q=${searchQuery}&image_type=photo`,
-  //     )
-  //     .then(({ data }) => {
-  //       this.setState({ images: data.hits });
-  //     })
-  //     .catch(error => console.log(error));
-  // };
+    axios
+      .get(
+        `https://pixabay.com/api/?key=21072245-3acfda09a1d5bc65070e6b336&q=${searchQuery}&image_type=photo`
+      )
+      .then(({ data }) => {
+        this.setState({ images: data.hits });
+      })
+      .catch((error) => console.log(error));
+  };
 
   toggleModal = () =>
     this.setState(({ showModal }) => ({
