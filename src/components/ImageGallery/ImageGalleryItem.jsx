@@ -1,11 +1,30 @@
-import React from 'react';
-// import PropTypes from 'prop-types';
+import React, { PureComponent } from "react";
+// import PropTypes from "prop-types";
 
-const ImageGalleryItem = () => (
-  <li className="ImageGalleryItem">
-    <img src="" alt="" className="ImageGalleryItem-image" />
-  </li>
-);
+class ImageGalleryItem extends PureComponent {
+  handleClick = (e) => {
+    this.props.toggleModal();
+    if (e.target.nodeName === "IMG") {
+      this.setState({ largeImageURL: e.target.dataset.large });
+      this.props.handleLargeURLImage(e.target.dataset.large);
+    }
+  };
+  render() {
+    const { id, webformatURL, largeImageURL, tags, toggleModal } = this.props;
+
+    return (
+      <li className="ImageGalleryItem" key={id} onClick={this.handleClick}>
+        <img
+          src={webformatURL}
+          alt={tags}
+          className="ImageGalleryItem-image"
+          onClick={this.handleClick}
+          data-large={largeImageURL}
+        />
+      </li>
+    );
+  }
+}
 
 ImageGalleryItem.propTypes = {
   // bla: PropTypes.string,

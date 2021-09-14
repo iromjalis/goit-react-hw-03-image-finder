@@ -24,15 +24,12 @@ class Modal extends PureComponent {
     }
   };
   render() {
+    const { largeImageURL } = this.props;
     return createPortal(
       <div className="Overlay" onClick={this.handkeBackdropClick}>
         <div className="Modal">
           {this.props.children}
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png"
-            alt="No available"
-            width="350"
-          />
+          <img src={largeImageURL} alt="No available" width="350" />
         </div>
       </div>,
       modalRoot

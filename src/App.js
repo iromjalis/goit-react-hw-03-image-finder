@@ -6,7 +6,7 @@ import axios from "axios";
 
 import Container from "./components/Container/Container";
 import Searchbar from "./components/Searchbar/Searchbar";
-// import ImageGallery from './components/ImageGallery/ImageGallery';
+import ImageGallery from "./components/ImageGallery/ImageGallery";
 import Button from "./components/Button/Button";
 import Modal from "./components/Modal/Modal";
 
@@ -18,6 +18,8 @@ import Modal from "./components/Modal/Modal";
 class App extends Component {
   state = {
     images: [],
+    searchQuery: "",
+    largeImageURL: "",
     // filter: '',
     // isLoading: false,
     // error: null,
@@ -30,9 +32,9 @@ class App extends Component {
     }
   }
 
-  // componentDidCatch(error) {
-  //   this.setState({ error });
-  // }
+  componentDidCatch(error) {
+    this.setState({ error });
+  }
 
   // onChangeQuery = query => {
   //   this.setState({
@@ -40,24 +42,24 @@ class App extends Component {
   //   });
   // };
 
-  // fetchImages = () => {
-  //   const { currentPage, searchQuery } = this.state;
+  fetchImages = () => {
+    const { currentPage, searchQuery } = this.state;
 
-  //   this.setState({ isLoading: true });
-  //   axios
-  //     .get(
-  //       `https://pixabay.com/api/?key=21072245-3acfda09a1d5bc65070e6b336&q=${searchQuery}&image_type=photo&page=${currentPage}`,
-  //     )
-  //     .then(response => {
-  //       this.setState(prevState => ({
-  //         images: [...prevState.images, ...this.state.images],
-  //         currentPage: prevState.currentPage + 1,
-  //         error: '',
-  //       }));
-  //     })
-  //     .catch(error => console.log(error))
-  //     .finally(() => this.setState({ isLoading: false }));
-  // };
+    this.setState({ isLoading: true });
+    axios
+      .get(
+        `https://pixabay.com/api/?key=21072245-3acfda09a1d5bc65070e6b336&q=${searchQuery}&image_type=photo&page=${currentPage}`
+      )
+      .then((response) => {
+        this.setState((prevState) => ({
+          images: [...prevState.images, ...this.state.images],
+          currentPage: prevState.currentPage + 1,
+          error: "",
+        }));
+      })
+      .catch((error) => console.log(error))
+      .finally(() => this.setState({ isLoading: false }));
+  };
 
   componentDidMount = () => {
     const { searchQuery } = this.state;
@@ -77,17 +79,30 @@ class App extends Component {
       showModal: !showModal,
     }));
 
+  handleLargeURLImage = (data) => {
+    this.setState({ largeImageURL: data });
+    this.setState({ showModal: true });
+  };
+
   render() {
-    const { images, showModal } = this.state;
+    const { images, showModal, largeImageURL } = this.state;
     return (
       <div className="App">
         <Container>
+          {showModal && (
+            <Modal onClose={this.toggleModal} largeImageURL={largeImageURL} />
+          )}
           <Searchbar onSubmit={this.onChangeQuery} />
-          {/* <ImageGallery /> */}
+          {images.length > 0 && (
+            <ImageGallery
+              images={images}
+              handleLargeURLImage={this.handleLargeURLImage}
+              toggleModal={this.toggleModal}
+            />
+          )}
           {images.length > 0 && <Button />}
         </Container>
-        <button onClick={this.toggleModal}> show modal</button>
-        {showModal && <Modal onClose={this.toggleModal} />}
+        {/* <button onClick={this.toggleModal}> show modal</button> */}
       </div>
     );
   }

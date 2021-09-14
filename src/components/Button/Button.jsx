@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent } from "react";
 // import PropTypes from 'prop-types';
 // import { Test } from './Button.styles';
 
@@ -12,10 +12,7 @@ class Button extends PureComponent {
   }
 
   render() {
-    if (this.state.hasError) {
-      return <h1>Something went wrong.</h1>;
-    }
-    return <div className="ButtonWrapper">Button</div>;
+    return <button className="ButtonWrapper">Load more...</button>;
   }
 }
 
