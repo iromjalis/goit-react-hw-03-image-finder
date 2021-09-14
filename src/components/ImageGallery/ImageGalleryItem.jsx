@@ -12,7 +12,11 @@ class ImageGalleryItem extends PureComponent {
     const { id, webformatURL, largeImageURL, tags } = this.props;
 
     return (
-      <li className="ImageGalleryItem" key={id} onClick={this.handleClick}>
+      <li
+        className="ImageGalleryItem"
+        key={webformatURL}
+        onClick={this.handleClick}
+      >
         <img
           src={webformatURL}
           alt={tags}
