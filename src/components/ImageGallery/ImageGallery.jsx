@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+//components
 import ImageGalleryItem from "./ImageGalleryItem";
 
 class ImageGallery extends Component {
@@ -13,11 +14,11 @@ class ImageGallery extends Component {
   render() {
     const { images } = this.props;
     return (
-      <ul className="ImageGallery">
-        {images.map(({ id, webformatURL, largeImageURL, tags }) => (
+      <ul className="ImageGallery" id="imagesList">
+        {images.map(({ id, webformatURL, largeImageURL, tags, user }) => (
           <ImageGalleryItem
             onClick={this.handleClick}
-            key={id}
+            key={`${id}${user}`}
             webformatURL={webformatURL}
             largeImageURL={largeImageURL}
             tag={tags}
