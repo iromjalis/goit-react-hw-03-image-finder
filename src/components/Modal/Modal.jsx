@@ -29,7 +29,7 @@ class Modal extends PureComponent {
       <div className="Overlay" onClick={this.handkeBackdropClick}>
         <div className="Modal">
           {this.props.children}
-          <img src={largeImageURL} alt="No available" />
+          <img src={largeImageURL} alt="No available" width="640" />
         </div>
       </div>,
       modalRoot
