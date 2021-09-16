@@ -68,7 +68,8 @@ class App extends Component {
           top: document.querySelector("#imagesList").scrollHeight,
           behavior: "smooth",
         });
-      });  };
+      });
+  };
 
   toggleModal = () =>
     this.setState(({ showModal }) => ({
