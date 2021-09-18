@@ -1,13 +1,17 @@
 import axios from "axios";
+import config from "./config";
 
-axios.defaults.params = { currentPage: 1, searchQuery: "" };
-const API = "21072245-3acfda09a1d5bc65070e6b336";
-axios.defaults.baseURL = "https://pixabay.com/api/";
-const params = "&image_type=photo";
+axios.defaults.params = {
+  ...config,
+};
 
 const fetchImages = async ({ currentPage, searchQuery }) => {
+  const { API, params } = axios.defaults.params;
   return await axios
-    .get(`?key=${API}&q=${searchQuery}&${params}&page=${currentPage}`)
+    .get(
+      `?key=${API}&q=${searchQuery}&${params}&page=${currentPage}`,
+      axios.defaults.params
+    )
     .then((response) => response.data.hits);
 };
 
